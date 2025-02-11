@@ -1,0 +1,97 @@
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+
+#define BUTTON_PIN 2  
+
+RF24 radio(9, 10);  
+const byte address[6] = "00001";
+
+bool buttonPressed = false;  
+
+void setup() {
+    Serial.begin(115200);
+    pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+    if (!radio.begin()) {
+        Serial.println("NRF24L01 NOT detected! Check wiring.");
+        while (1);
+    }
+
+    radio.setChannel(90);
+    radio.openWritingPipe(address);
+    radio.setPALevel(RF24_PA_LOW);
+    radio.setDataRate(RF24_250KBPS);
+    radio.stopListening();
+
+    Serial.println("Transmitter Ready!");
+}
+
+void loop() {
+    bool buttonState = digitalRead(BUTTON_PIN) == LOW;  
+#include <nRF24L01.h>
+#include <RF24.h>
+
+#define BUTTON_PIN 2  
+
+RF24 radio(9, 10);  
+const byte address[6] = "00001";
+
+bool buttonPressed = false;  
+
+void setup() {
+    Serial.begin(115200);
+    pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+    if (!radio.begin()) {
+        Serial.println("NRF24L01 NOT detected! Check wiring.");
+        while (1);
+    }
+
+    radio.setChannel(90);
+    radio.openWritingPipe(address);
+    radio.setPALevel(RF24_PA_LOW);
+    radio.setDataRate(RF24_250KBPS);
+    radio.stopListening();
+
+    Serial.println("Transmitter Ready!");
+}
+
+void loop() {
+    bool buttonState = digitalRead(BUTTON_PIN) == LOW;  
+
+    if (buttonState && !buttonPressed) {  
+        const char text[] = "lat:12.8409° N long:80.1530°E";
+        bool success = radio.write(&text, sizeof(text));
+
+        if (success) {
+            Serial.println("message sent: latittude:12.8409° N ,longitude:80.1530°E");
+        } else {
+            Serial.println("Message Sending Failed!");
+        }
+
+        buttonPressed = true;  
+    }
+
+    if (!buttonState) {  
+        buttonPressed = false;
+    }
+} if button is pressed
+
+    if (buttonState && !buttonPressed) {  
+        const char text[] = "lat:12.8409° N long:80.1530°E";
+        bool success = radio.write(&text, sizeof(text));
+
+        if (success) {
+            Serial.println("message sent: latittude:12.8409° N ,longitude:80.1530°E");
+        } else {
+            Serial.println("Message Sending Failed!");
+        }
+
+        buttonPressed = true; 
+    }
+
+    if (!buttonState) {  
+        buttonPressed = false;
+    }
+}
