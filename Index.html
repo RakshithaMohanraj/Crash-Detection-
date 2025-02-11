@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accident Detection Data</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <h2>Accident Alert Data</h2>
+    <p id="data">Loading...</p>
+
+    <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyAY3M-ks83IIvqkItRk_OIC1yA2j2wZV0o",
+            authDomain: "accident-detection-96180.firebaseapp.com",
+            databaseURL: "https://accident-detection-96180-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "accident-detection-96180",
+            storageBucket: "accident-detection-96180.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+       
+        const dataRef = ref(database, "/accidentAlert");
+
+        
+        onValue(dataRef, (snapshot) => {
+            const data = snapshot.val();
+            document.getElementById("data").innerText = data || "No data available";
+        });
+    </script>
+</body>
+</html>
